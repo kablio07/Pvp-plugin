@@ -394,26 +394,28 @@ public class PVPPlugin extends JavaPlugin implements Listener, CommandExecutor {
             }
         }
     }
-    
     private boolean isWeaponOrTool(Material material) {
-        return material.name().endsWith("_SWORD") ||
-               material.name().endsWith("_AXE") ||
-               material.name().endsWith("_PICKAXE") ||
-               material.name().endsWith("_SHOVEL") ||
-               material.name().endsWith("_HOE") ||
-               material == Material.TRIDENT;
-    }
-        return material == Material.OAK_LEAVES ||
-               material == Material.BIRCH_LEAVES ||
-               material == Material.SPRUCE_LEAVES ||
-               material == Material.JUNGLE_LEAVES ||
-               material == Material.ACACIA_LEAVES ||
-               material == Material.DARK_OAK_LEAVES ||
-               material == Material.MANGROVE_LEAVES ||
-               material == Material.CHERRY_LEAVES ||
-               material == Material.AZALEA_LEAVES ||
-               material == Material.FLOWERING_AZALEA_LEAVES;
-    }
+    return material.name().endsWith("_SWORD") ||
+           material.name().endsWith("_AXE") ||
+           material.name().endsWith("_PICKAXE") ||
+           material.name().endsWith("_SHOVEL") ||
+           material.name().endsWith("_HOE") ||
+           material == Material.TRIDENT;
+}
+
+private boolean isLeaf(Material material) {
+    return material == Material.OAK_LEAVES ||
+           material == Material.BIRCH_LEAVES ||
+           material == Material.SPRUCE_LEAVES ||
+           material == Material.JUNGLE_LEAVES ||
+           material == Material.ACACIA_LEAVES ||
+           material == Material.DARK_OAK_LEAVES ||
+           material == Material.MANGROVE_LEAVES ||
+           material == Material.CHERRY_LEAVES ||
+           material == Material.AZALEA_LEAVES ||
+           material == Material.FLOWERING_AZALEA_LEAVES;
+}
+    
     
     private void setupScoreboard() {
         ScoreboardManager manager = Bukkit.getScoreboardManager();
