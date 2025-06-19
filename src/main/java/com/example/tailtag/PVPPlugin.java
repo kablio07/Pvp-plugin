@@ -321,43 +321,47 @@ public class PVPPlugin extends JavaPlugin implements Listener, CommandExecutor {
     }
     
     @EventHandler
-    public void onBlockBreak(BlockBreakEvent event) {
-        if (!gameStarted) return;
-        
-        Block block = event.getBlock();
-        Material type = block.getType();
-        Location location = block.getLocation();
-        
-        // 광석 드랍 변경
-        switch (type) {
-            case IRON_ORE:
-            case DEEPSLATE_IRON_ORE:
-                event.setDropItems(false);
-                location.getWorld().dropItemNaturally(location, new ItemStack(Material.IRON_INGOT, 1));
-                break;
-                
-            case GOLD_ORE:
-            case DEEPSLATE_GOLD_ORE:
-            case NETHER_GOLD_ORE:
-                event.setDropItems(false);
-                location.getWorld().dropItemNaturally(location, new ItemStack(Material.GOLD_INGOT, 1));
-                break;
-                
-            case EMERALD_ORE:
-            case DEEPSLATE_EMERALD_ORE:
-                event.setDropItems(false);
-                location.getWorld().dropItemNaturally(location, new ItemStack(Material.DIAMOND, 1));
-                break;
-        }
-        
-        // 나뭇잎에서 사과 드랍 (가위 사용시)
-        if (isLeafBlock(type) && event.getPlayer().getInventory().getItemInMainHand().getType() == Material.SHEARS) {
-            Random random = new Random();
-            if (random.nextDouble() < 0.1) { // 10% 확률
-                location.getWorld().dropItemNaturally(location, new ItemStack(Material.APPLE, 1));
-            }
+public void onBlockBreak(BlockBreakEvent event) {
+    if (!gameStarted) return;
+
+    Block block = event.getBlock();
+    Material type = block.getType();
+    Location location = block.getLocation();
+
+    // 광석 드랍 변경
+    switch (type) {
+        case IRON_ORE:
+            event.setDropItems(false);
+            location.getWorld().dropItemNaturally(location, new ItemStack(Material.IRON_INGOT, 1));
+            break;
+
+        case GOLD_ORE:
+            event.setDropItems(false);
+            location.getWorld().dropItemNaturally(location, new ItemStack(Material.GOLD_INGOT, 1));
+            break;
+
+        case EMERALD_ORE:
+            event.setDropItems(false);
+            location.getWorld().dropItemNaturally(location, new ItemStack(Material.DIAMOND, 1));
+            break;
+
+        // Optional: 네더 골드 유지하고 싶으면 주석 해제
+        /*
+        case NETHER_GOLD_ORE:
+            event.setDropItems(false);
+            location.getWorld().dropItemNaturally(location, new ItemStack(Material.GOLD_INGOT, 1));
+            break;
+        */
+    }
+
+    // 나뭇잎에서 사과 드랍 (가위 사용시)
+    if (isLeaf(type) && event.getPlayer().getInventory().getItemInMainHand().getType() == Material.SHEARS) {
+        Random random = new Random();
+        if (random.nextDouble() < 0.1) { // 10% 확률
+            location.getWorld().dropItemNaturally(location, new ItemStack(Material.APPLE, 1));
         }
     }
+}
     
     @EventHandler
     public void onPlayerItemHeld(PlayerItemHeldEvent event) {
@@ -409,11 +413,7 @@ private boolean isLeaf(Material material) {
            material == Material.SPRUCE_LEAVES ||
            material == Material.JUNGLE_LEAVES ||
            material == Material.ACACIA_LEAVES ||
-           material == Material.DARK_OAK_LEAVES ||
-           material == Material.MANGROVE_LEAVES ||
-           material == Material.CHERRY_LEAVES ||
-           material == Material.AZALEA_LEAVES ||
-           material == Material.FLOWERING_AZALEA_LEAVES;
+           material == Material.DARK_OAK_LEAVES;
 }
     
     
